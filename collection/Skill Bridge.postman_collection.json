@@ -1,0 +1,1318 @@
+{
+  "info": {
+    "_postman_id": "51296b91-4cd2-4309-9d6d-40e2988dc879",
+    "name": "Skill Bridge",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "41764173"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "Sign Up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"rahi@gmail.com\",\r\n  \"password\": \"mahdi123\",\r\n  \"name\": \"Rakib Hussain\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/auth/sign-up/email",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "sign-up",
+                "email"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Sign In",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:3000",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"johndoe@gmail.com\",\r\n  \"password\": \"mahdi123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/auth/sign-in/email",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "sign-in",
+                "email"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "tutor",
+      "item": [
+        {
+          "name": "Create Tutor Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"bio\": \"I am a Senior Software Engineer with 10 years of experience in Fullstack development and cloud architecture.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/tutor/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Teaching Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"subjectName\": \"kubernities\",\r\n    \"hourlyRate\": 65,\r\n    \"experienceYears\": 4,\r\n    \"level\": \"ADVANCED\"\r\n    // \"bio\": string;\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://skillbridge-dikdhkzam-mahdihdevs-projects.vercel.app//api/v1/tutor/createTeachingSession",
+              "protocol": "https",
+              "host": [
+                "skillbridge-dikdhkzam-mahdihdevs-projects",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "",
+                "api",
+                "v1",
+                "tutor",
+                "createTeachingSession"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Teacher account",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"tutorProfileId\": \"7d7a9ef7-9214-4fc5-a719-102b41b432f6\",\r\n    \"status\": \"approved\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/tutor/approve",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "approve"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get all tutors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/tutor/getAllTutors/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "getAllTutors",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "search",
+                  "value": "admin",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "subject",
+                  "value": "physics",
+                  "disabled": true
+                },
+                {
+                  "key": "minPrice",
+                  "value": "30",
+                  "disabled": true
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "50",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "disabled": true
+                },
+                {
+                  "key": "skip",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all tutors by admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "https://skillbridge-dikdhkzam-mahdihdevs-projects.vercel.app/api/v1/tutor/getAllTutors/admin",
+              "protocol": "https",
+              "host": [
+                "skillbridge-dikdhkzam-mahdihdevs-projects",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "getAllTutors",
+                "admin"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get tutor own profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/tutor/getMyProfile",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "getMyProfile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get profile by id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/tutor/7d7a9ef7-9214-4fc5-a719-102b41b432f6",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "7d7a9ef7-9214-4fc5-a719-102b41b432f6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get teaching session",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "https://skillbridge-dikdhkzam-mahdihdevs-projects.vercel.app/api/v1/tutor/getTeachingSession",
+              "protocol": "https",
+              "host": [
+                "skillbridge-dikdhkzam-mahdihdevs-projects",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "getTeachingSession"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update tutor profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"tutorProfileId\": \"a9e6eb81-7bba-4f7e-bbe3-523bbe48d6a5\",\r\n    \"bio\": \"I am a Senior Software Engineer with 10 years of experience in Fullstack development and cloud architecture.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/tutor/updateTutorProfile",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "updateTutorProfile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update tutor Session",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    // \"hourlyRate\": \"30.20\"\r\n    // \"experienceYears\": \"2\"\r\n    \"level\": \"INTERMEDIATE\"\r\n    // \"description\": \"I am professional at this subject\"\r\n    // \"isPrimary\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/tutor/updateTeachingSession/001c103f-4ec7-48bc-aab8-00faa455cfe3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "updateTeachingSession",
+                "001c103f-4ec7-48bc-aab8-00faa455cfe3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete tutor session",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/tutor/deleteTeachingSession/9459753c-130b-487e-afd1-3e2936b9a594",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "tutor",
+                "deleteTeachingSession",
+                "9459753c-130b-487e-afd1-3e2936b9a594"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "availability",
+      "item": [
+        {
+          "name": "Create Availability",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"startDate\": \"2026-01-01\",\r\n    \"endDate\": \"2026-06-30\",\r\n    \"slots\": [\r\n        {\r\n            \"dayOfWeek\": \"SUN\",\r\n            \"startTime\": \"16:00\",\r\n            \"endTime\": \"18:00\"\r\n        }\r\n        // {\r\n        //     \"dayOfWeek\": \"WED\",\r\n        //     \"startTime\": \"16:00\",\r\n        //     \"endTime\": \"18:00\"\r\n        // },\r\n        // {\r\n        //     \"dayOfWeek\": \"THU\",\r\n        //     \"startTime\": \"16:00\",\r\n        //     \"endTime\": \"18:00\"\r\n        // }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/availability/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "availability",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Availability",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"dayOfWeek\": \"MON\",\r\n  \"startTime\": \"10:00\",\r\n  \"endTime\": \"14:00\",\r\n  \"startDate\": \"2026-01-01\",\r\n  \"endDate\": \"2026-07-30\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/availability/update/124095f3-52fa-4436-8163-9774e45ac0f4",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "availability",
+                "update",
+                "124095f3-52fa-4436-8163-9774e45ac0f4"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Own Availability",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/availability/me",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "availability",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Availability by Id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/availability/a9e6eb81-7bba-4f7e-bbe3-523bbe48d6a5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "availability",
+                "a9e6eb81-7bba-4f7e-bbe3-523bbe48d6a5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Availability",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/availability/delete/c90bc55f-98b0-4c57-a458-01fad182d3ea",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "availability",
+                "delete",
+                "c90bc55f-98b0-4c57-a458-01fad182d3ea"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get availability with bookings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/availability/7d7a9ef7-9214-4fc5-a719-102b41b432f6/with-bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "availability",
+                "7d7a9ef7-9214-4fc5-a719-102b41b432f6",
+                "with-bookings"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "booking",
+      "item": [
+        {
+          "name": "create booking",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"tutorCategoryId\": \"a19145c4-4973-45c3-b88e-a52e8b08cd6c\",\r\n    \"sessionDate\": \"2026-04-21\",\r\n    \"startTime\": \"12:00\",\r\n    \"endTime\": \"14:00\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/booking/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "booking",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my sessions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/booking/my-sessions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "booking",
+                "my-sessions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get upcoming session",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{localUrl}}/api/v1/booking/upcoming",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "booking",
+                "upcoming"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Booking Status",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"COMPLETED\"\r\n    // \"meetingLink\": \"link.google-meet.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/booking/68fcfd71-a1eb-4d84-8dc4-78a5d208db3e/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "booking",
+                "68fcfd71-a1eb-4d84-8dc4-78a5d208db3e",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get tutor sessions",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"tutorCategoryId\": \"001c103f-4ec7-48bc-aab8-00faa455cfe3\",\r\n    \"sessionDate\": \"2026-03-05\",\r\n    \"startTime\": \"12:00\",\r\n    \"endTime\": \"13:00\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/booking/teaching?status=PENDING",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "booking",
+                "teaching"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all booking",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/booking/getAllBooking?status=CANCELLED&studentId=gMkdub1Cx2QMflGqWsTWdB0AF0jCLBr6&tutorId=a9e6eb81-7bba-4f7e-bbe3-523bbe48d6a5&subject=prisma-orm&startDate=2026-03-08&endDate=2026-03-09&minPrice=10&maxPrice=95&page=2&limit=1&skip=2&sortBy=price&sortOrder=desc",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "booking",
+                "getAllBooking"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "CANCELLED",
+                  "type": "text"
+                },
+                {
+                  "key": "studentId",
+                  "value": "gMkdub1Cx2QMflGqWsTWdB0AF0jCLBr6",
+                  "type": "text"
+                },
+                {
+                  "key": "tutorId",
+                  "value": "a9e6eb81-7bba-4f7e-bbe3-523bbe48d6a5",
+                  "type": "text"
+                },
+                {
+                  "key": "subject",
+                  "value": "prisma-orm",
+                  "type": "text"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2026-03-08",
+                  "type": "text"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2026-03-09",
+                  "type": "text"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "10"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "95"
+                },
+                {
+                  "key": "page",
+                  "value": "2",
+                  "type": "text"
+                },
+                {
+                  "key": "limit",
+                  "value": "1",
+                  "type": "text"
+                },
+                {
+                  "key": "skip",
+                  "value": "2",
+                  "type": "text"
+                },
+                {
+                  "key": "sortBy",
+                  "value": "price",
+                  "type": "text"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "subject",
+      "item": [
+        {
+          "name": "get all subject",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/subject/getAllSubjects",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "subject",
+                "getAllSubjects"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create subject",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"subject\": \"assignment 4\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/subject/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "subject",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update subject",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"subject\": \"sujbect properly works\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/subject/update/679d2490-5fb7-4bd6-a196-932f67389593",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "subject",
+                "update",
+                "679d2490-5fb7-4bd6-a196-932f67389593"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update subject Copy",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"subject\": \"Hea update Properly hoise!\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/subject/delete/679d2490-5fb7-4bd6-a196-932f67389593",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "subject",
+                "delete",
+                "679d2490-5fb7-4bd6-a196-932f67389593"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reviews",
+      "item": [
+        {
+          "name": "create review",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"bookingId\": \"\",\r\n    \"rating\": 3,\r\n    \"comment\": \"i like this teacher\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/review/create",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "create"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get reviews by tutorprofile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/review/a9e6eb81-7bba-4f7e-bbe3-523bbe48d6a5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "a9e6eb81-7bba-4f7e-bbe3-523bbe48d6a5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "https://skillbridge-dikdhkzam-mahdihdevs-projects.vercel.app/api/v1/review/my",
+              "protocol": "https",
+              "host": [
+                "skillbridge-dikdhkzam-mahdihdevs-projects",
+                "vercel",
+                "app"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "my"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete review",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Origin",
+                "value": "http://localhost:5000",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{localUrl}}/api/v1/review/d428b88c-b5a7-47f9-8433-261bdfc87f2f?targetStudentId=K8nK0GmisgzsDPDCOxIqUPKhI86ll0MQ",
+              "host": [
+                "{{localUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "review",
+                "d428b88c-b5a7-47f9-8433-261bdfc87f2f"
+              ],
+              "query": [
+                {
+                  "key": "targetStudentId",
+                  "value": "K8nK0GmisgzsDPDCOxIqUPKhI86ll0MQ"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "admin",
+      "item": [
+        {
+          "name": "New Request",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/admin/users?limit=1&page=3&sortOrder=asc&skip=2&search=mahdi@gmail.com",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "1"
+                },
+                {
+                  "key": "page",
+                  "value": "3",
+                  "type": "text"
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "asc",
+                  "type": "text"
+                },
+                {
+                  "key": "skip",
+                  "value": "2",
+                  "type": "text"
+                },
+                {
+                  "key": "search",
+                  "value": "mahdi@gmail.com",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request Copy",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\": \"BANNED\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/v1/admin/users/EeBYFOTQDJbRKHbCNlqjxCPSf5FXuYxa/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "users",
+                "EeBYFOTQDJbRKHbCNlqjxCPSf5FXuYxa",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "payment",
+      "item": [
+        {
+          "name": "checkout payment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/payments/checkout/:bookingId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "checkout",
+                ":bookingId"
+              ],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": "68ef6c69-3793-43fd-a0bf-e81b9f08ffcf"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refund payment",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/v1/payments/refund/:bookingId",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "v1",
+                "payments",
+                "refund",
+                ":bookingId"
+              ],
+              "variable": [
+                {
+                  "key": "bookingId",
+                  "value": "68ef6c69-3793-43fd-a0bf-e81b9f08ffcf"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

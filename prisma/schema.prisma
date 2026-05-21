@@ -1,0 +1,275 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client"
+    // output   = "../generated/prisma"
+    output   = "../src/generated"
+    // moduleFormat = "cjs"
+}
+
+datasource db {
+    provider = "postgresql"
+}
+
+// Enums 
+
+enum UserRole {
+    STUDENT
+    TUTOR
+    ADMIN
+}
+
+enum UserStatus {
+    ACTIVE
+    BANNED
+}
+
+enum TutorLevel {
+    BEGINNER
+    INTERMEDIATE
+    ADVANCED
+}
+
+enum DayOfWeek {
+    MON
+    TUE
+    WED
+    THU
+    FRI
+    SAT
+    SUN
+}
+
+enum BookingStatus {
+    PENDING
+    CONFIRMED
+    COMPLETED
+    CANCELLED
+}
+
+enum ProfileStatus {
+    PENDING
+    APPROVED
+    REJECTED
+}
+
+enum PaymentStatus {
+    PENDING
+    SUCCEEDED
+    FAILED
+    REFUNDED
+}
+
+model User {
+    id            String        @id
+    name          String
+    email         String
+    emailVerified Boolean       @default(false)
+    role          UserRole      @default(STUDENT)
+    status        UserStatus    @default(ACTIVE)
+    image         String?
+    createdAt     DateTime      @default(now())
+    updatedAt     DateTime      @updatedAt
+    sessions      Session[]
+    accounts      Account[]
+    tutorProfile  TutorProfile?
+    bookings      Booking[]     @relation("StudentBookings")
+    reviews       Review[]
+    adminLogs     AdminLog[]
+    payments      Payment[]     @relation("StudentPayments")
+
+    @@unique([email])
+    @@map("user")
+}
+
+model Session {
+    id        String   @id
+    expiresAt DateTime
+    token     String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    ipAddress String?
+    userAgent String?
+    userId    String
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([token])
+    @@index([userId])
+    @@map("session")
+}
+
+model Account {
+    id                    String    @id
+    accountId             String
+    providerId            String
+    userId                String
+    user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    accessToken           String?
+    refreshToken          String?
+    idToken               String?
+    accessTokenExpiresAt  DateTime?
+    refreshTokenExpiresAt DateTime?
+    scope                 String?
+    password              String?
+    createdAt             DateTime  @default(now())
+    updatedAt             DateTime  @updatedAt
+
+    @@index([userId])
+    @@map("account")
+}
+
+model Verification {
+    id         String   @id
+    identifier String
+    value      String
+    expiresAt  DateTime
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+
+    @@index([identifier])
+    @@map("verification")
+}
+
+model TutorProfile {
+    id            String        @id @default(uuid())
+    userId        String        @unique
+    bio           String?
+    totalReviews  Int           @default(0)
+    averageRating Float         @default(0)
+    status        ProfileStatus @default(PENDING)
+    isVerified    Boolean       @default(false)
+
+    // Relations 
+    user            User               @relation(fields: [userId], references: [id])
+    tutorCategories TutorCategory[]
+    availability    AvailabilitySlot[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    reviews   Review[]
+}
+
+model Subject {
+    id   String @id @default(uuid())
+    name String
+    slug String @unique
+
+    //relations
+    tutorCategories TutorCategory[]
+
+    createdAt DateTime @default(now())
+}
+
+// Many to many resolve table
+model TutorCategory {
+    id              String     @id @default(uuid())
+    tutorProfileId  String
+    subjectId       String
+    hourlyRate      Float
+    experienceYears Int
+    level           TutorLevel
+    description     String?
+    isPrimary       Boolean    @default(false)
+
+    // Relations
+    tutorProfile TutorProfile @relation(fields: [tutorProfileId], references: [id], onDelete: Cascade)
+    subject      Subject      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime  @default(now())
+    bookings  Booking[]
+
+    @@unique([tutorProfileId, subjectId])
+}
+
+model AvailabilitySlot {
+    id             String @id @default(uuid())
+    tutorProfileId String
+
+    dayOfWeek DayOfWeek
+    startTime DateTime
+    endTime   DateTime
+
+    startDate DateTime
+    endDate   DateTime
+
+    isActive Boolean @default(true)
+
+    // Relation
+    tutorProfile TutorProfile @relation(fields: [tutorProfileId], references: [id])
+
+    createdAt DateTime @default(now())
+}
+
+model Booking {
+    id              String        @id @default(uuid())
+    studentId       String
+    tutorCategoryId String
+    sessionDate     DateTime
+    startTime       DateTime
+    endTime         DateTime
+    price           Float
+    status          BookingStatus @default(PENDING)
+    meetingLink     String?
+
+    // Relations 
+    student       User          @relation("StudentBookings", fields: [studentId], references: [id])
+    tutorCategory TutorCategory @relation(fields: [tutorCategoryId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    review    Review?
+    payment   Payment?
+}
+
+model Payment {
+    id                    String        @id @default(uuid())
+    bookingId             String        @unique
+    studentId             String
+    stripeEventId         String?       @unique
+    amount                Float
+    currency              String        @default("usd")
+    status                PaymentStatus @default(PENDING)
+    stripePaymentIntentId String?       @unique
+    stripeSessionId       String?       @unique
+    paidAt                DateTime?
+
+    booking Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+    student User    @relation("StudentPayments", fields: [studentId], references: [id])
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("payment")
+}
+
+model Review {
+    id             String  @id @default(uuid())
+    bookingId      String  @unique
+    studentId      String
+    tutorProfileId String
+    rating         Int
+    comment        String?
+
+    // Relations
+    booking      Booking      @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+    student      User         @relation(fields: [studentId], references: [id])
+    tutorProfile TutorProfile @relation(fields: [tutorProfileId], references: [id])
+
+    createdAt DateTime @default(now())
+}
+
+model AdminLog {
+    id       String  @id @default(uuid())
+    adminId  String
+    action   String
+    targetId String?
+
+    // relations
+    admin User @relation(fields: [adminId], references: [id])
+
+    createdAt DateTime @default(now())
+}
