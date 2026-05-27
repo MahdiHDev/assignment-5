@@ -1,0 +1,13 @@
+# allowBuilds:
+#   '@prisma/engines': true
+#   esbuild: true
+#   prisma: true
+
+packages:
+  - "."
+
+allowBuilds:
+  "@prisma/engines": true
+  esbuild: true
+  prisma: true
+  sharp: set this to true or false
