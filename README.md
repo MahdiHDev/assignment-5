@@ -8,15 +8,9 @@ SkillBridge is a backend API for an online tutoring marketplace where students c
 
 | Resource      | URL                                                     |
 | ------------- | ------------------------------------------------------- |
-| Backend Live  | `https://skillbridge-backend.vercel.app`                |
-| Frontend Live | `https://skillbridge-frontend.vercel.app`               |
-| Frontend Repo | `https://github.com/your-username/skillbridge-frontend` |
-
----
-
-## 🎥 Demo Video
-
-> [Watch Demo on Google Drive](https://drive.google.com/file/d/your-video-id/view)
+| Backend Live  | `https://assignment5-api.vercel.app/`                   |
+| Frontend Live | `https://assignment-5-frontend-one.vercel.app/`         |
+| Frontend Repo | `https://github.com/MahdiHDev/assignment-5-frontend`    |
 
 ---
 
