@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { Prisma, TutorLevel } from "../../generated/client";
+import { ZodError } from "zod";
+import { Prisma } from "../../generated/client";
 
 function errorHandler(
     err: any,
@@ -9,11 +10,16 @@ function errorHandler(
 ) {
     let statusCode = 500;
     let errorMessage = "Internal Server error";
-    let errorDetails = err;
-    const validLevels = Object.values(TutorLevel);
+    let errorDetails: any = undefined;
 
-    // prismaClientValidationError
-    if (err instanceof Prisma.PrismaClientValidationError) {
+    // ZodError — validation failures
+    if (err instanceof ZodError) {
+        statusCode = 400;
+        errorMessage = "Validation failed";
+        errorDetails = err.flatten().fieldErrors;
+    }
+    // PrismaClientValidationError
+    else if (err instanceof Prisma.PrismaClientValidationError) {
         statusCode = 400;
         errorMessage = "You provide incorrect field type or missing fields!";
     }
@@ -50,7 +56,8 @@ function errorHandler(
     res.status(statusCode);
     res.json({
         message: errorMessage,
-        error: errorDetails,
+        ...(errorDetails && { errors: errorDetails }),
+        ...(process.env.NODE_ENV !== "production" && { stack: err?.stack }),
     });
 }
 

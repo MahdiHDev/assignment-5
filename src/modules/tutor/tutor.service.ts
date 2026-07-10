@@ -1,25 +1,7 @@
-import { ProfileStatus, TutorLevel, UserRole } from "../../generated/enums";
+import { ProfileStatus, TutorLevel } from "../../generated/enums";
 import { TutorProfileWhereInput } from "../../generated/models";
 import { prisma } from "../../lib/prisma";
-
-type getAllTutorsOptions = {
-    search: string | undefined;
-    subjectSlug: string | undefined;
-    minPrice: number | undefined;
-    maxPrice: number | undefined;
-    minRating: number | undefined;
-
-    status: ProfileStatus;
-    isVerified: boolean | undefined;
-
-    role?: UserRole;
-
-    page: number;
-    limit: number;
-    skip: number;
-    sortBy: string;
-    sortOrder: "asc" | "desc";
-};
+import { getAllTutorsOptions } from "./tutor.interface";
 
 // create tutor profile
 const createTutorProfile = async (data: { bio?: string }, userId: string) => {

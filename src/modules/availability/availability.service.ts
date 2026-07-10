@@ -1,34 +1,23 @@
 import { DayOfWeek } from "../../generated/enums";
 import { prisma } from "../../lib/prisma";
-
-type CreateAvailabilityInput = {
-    startDate: string;
-    endDate: string;
-    slots: {
-        dayOfWeek: DayOfWeek;
-        startTime: string;
-        endTime: string;
-    }[];
-};
+import {
+    CreateAvailabilityInput,
+    UpdateAvailabilitySlot,
+} from "./availability.interface";
+import {
+    createAvailabilitySchema,
+    updateAvailabilitySchema,
+} from "./availability.validation";
 
 // create availability
 const createAvailability = async (
     userId: string,
     data: CreateAvailabilityInput,
 ) => {
-    const { startDate, endDate, slots } = data;
-    console.log("Received data:", data);
-
-    if (!slots || slots.length === 0) {
-        throw new Error("At least one slot is required");
-    }
+    const { startDate, endDate, slots } = createAvailabilitySchema.parse(data);
 
     const parsedStartDate = new Date(startDate);
     const parsedEndDate = new Date(endDate);
-
-    if (parsedStartDate >= parsedEndDate) {
-        throw new Error("Invalid date range");
-    }
 
     // find tutor profile
     const tutorProfile = await prisma.tutorProfile.findUnique({
@@ -51,28 +40,9 @@ const createAvailability = async (
 
     const availabilityData: any = [];
 
-    const validWeeks = Object.values(DayOfWeek);
-    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
-
     for (const slot of slots) {
-        // ✅ Enum validation
-        if (slot.dayOfWeek && !validWeeks.includes(slot.dayOfWeek)) {
-            throw new Error(
-                `DayOfWeek must be one of: ${validWeeks.join(", ")}`,
-            );
-        }
-
-        //  Validate time format BEFORE converting
-        if (!timeRegex.test(slot.startTime) || !timeRegex.test(slot.endTime)) {
-            throw new Error("Invalid time format. Use HH:MM (24-hour format)");
-        }
-
         const startTime = new Date(`1970-01-01T${slot.startTime}:00Z`);
         const endTime = new Date(`1970-01-01T${slot.endTime}:00Z`);
-
-        if (startTime >= endTime) {
-            throw new Error("Start time must be before end time");
-        }
 
         //check overlap only for same day
         const sameDaySlots = existingSlots.filter(
@@ -322,16 +292,9 @@ const getAvailableDatesInMonth = async (
 const updateAvailability = async (
     userId: string,
     availabilityId: string,
-    data: {
-        dayOfWeek?: DayOfWeek;
-        startTime?: string;
-        endTime?: string;
-        startDate?: string;
-        endDate?: string;
-    },
+    rawData: UpdateAvailabilitySlot,
 ) => {
-    const validWeeks = Object.values(DayOfWeek);
-    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+    const data = updateAvailabilitySchema.parse(rawData);
 
     // find tutorprofile
     const tutorProfile = await prisma.tutorProfile.findUnique({
@@ -357,11 +320,6 @@ const updateAvailability = async (
         throw new Error("Availability Slot not found");
     }
 
-    //  Enum validation
-    if (data.dayOfWeek && !validWeeks.includes(data.dayOfWeek as DayOfWeek)) {
-        throw new Error(`DayOfWeek must be one of: ${validWeeks.join(", ")}`);
-    }
-
     const updatedDay = data.dayOfWeek ?? existingSlot.dayOfWeek;
 
     const parsedStartDate = data.startDate
@@ -374,14 +332,6 @@ const updateAvailability = async (
 
     if (parsedStartDate >= parsedEndDate) {
         throw new Error("Invalid date range");
-    }
-
-    // Validate time format
-    if (
-        (data.startTime && !timeRegex.test(data.startTime)) ||
-        (data.endTime && !timeRegex.test(data.endTime))
-    ) {
-        throw new Error("Invalid time format. Use HH:MM (24-hour format)");
     }
 
     const startTime = data.startTime

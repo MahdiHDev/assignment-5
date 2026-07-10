@@ -56,7 +56,7 @@ app.use("/api/v1/users", userRouter);
 app.get("/", async (req: Request, res: Response) => {
     res.status(201).json({
         success: true,
-        message: "API is working",
+        message: "SkillBridge- Online Tutor Platform",
     });
 });
 

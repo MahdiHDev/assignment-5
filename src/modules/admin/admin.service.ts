@@ -1,15 +1,7 @@
 import { UserStatus } from "../../generated/enums";
 import { UserWhereInput } from "../../generated/models";
 import { prisma } from "../../lib/prisma";
-
-type getAllUsersOptions = {
-    search: string | undefined;
-    page: number;
-    limit: number;
-    skip: number;
-    sortBy: string;
-    sortOrder: "asc" | "desc";
-};
+import { getAllUsersOptions } from "./admin.interface";
 
 const getAllUsers = async ({
     page,

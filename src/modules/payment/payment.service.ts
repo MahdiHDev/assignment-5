@@ -1,15 +1,9 @@
 // src/app/module/payment/payment.service.ts
 import Stripe from "stripe";
 import { stripe } from "../../app/config/stripe.config";
-import { BookingStatus, PaymentStatus, UserRole } from "../../generated/enums";
+import { BookingStatus, PaymentStatus } from "../../generated/enums";
 import { prisma } from "../../lib/prisma";
-
-export interface IRequestUser {
-    email: string;
-    name: string;
-    role: UserRole;
-    emailVerified: true;
-}
+import { IRequestUser } from "./payment.interface";
 
 // ─── Create Checkout Session ───────────────────────────────────────────────
 
