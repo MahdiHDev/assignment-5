@@ -2,51 +2,22 @@ import { BookingStatus } from "../../generated/enums";
 import { BookingWhereInput } from "../../generated/models";
 import { prisma } from "../../lib/prisma";
 import {
+    IcreateBooking,
     getAllBookingOptions,
     getAllTeachingSessionOptions,
 } from "./booking.interface";
+import { bookingStatusSchema, createBookingSchema } from "./booking.validation";
 
-const createBooking = async (
-    studentId: string,
-    data: {
-        tutorCategoryId: string;
-        sessionDate: string;
-        startTime: string;
-        endTime: string;
-    },
-) => {
-    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+const createBooking = async (studentId: string, rawData: IcreateBooking) => {
+    const data = createBookingSchema.parse(rawData);
 
     if (!data.sessionDate) {
         throw new Error("Session date is required");
     }
 
     const sessionDate = new Date(`${data.sessionDate}T00:00:00.000Z`);
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    if (sessionDate < today) {
-        throw new Error("Session date cannot be in the past");
-    }
-
-    if (!data.startTime || !data.endTime) {
-        throw new Error("Start time and end time are required");
-    }
-    if (!timeRegex.test(data.startTime) || !timeRegex.test(data.endTime)) {
-        throw new Error("Invalid time format. Use HH:MM");
-    }
-
     const startTime = new Date(`1970-01-01T${data.startTime}:00Z`);
     const endTime = new Date(`1970-01-01T${data.endTime}:00Z`);
-
-    if (startTime >= endTime) {
-        throw new Error("Start time must be before end time");
-    }
-
-    if (!data.tutorCategoryId) {
-        throw new Error("Tutor category is required");
-    }
 
     return await prisma.$transaction(
         async (tx) => {
@@ -446,15 +417,9 @@ const getAllBooking = async ({
 
 const bookingStatus = async (
     bookingId: string,
-    data: { status: BookingStatus; meetingLink?: string },
+    rawData: { status: BookingStatus; meetingLink?: string },
 ) => {
-    const validStatus = Object.values(BookingStatus);
-
-    if (!validStatus.includes(data.status)) {
-        throw new Error(
-            `Invalid status. Status must be one of: ${validStatus.join(", ")}`,
-        );
-    }
+    const data = bookingStatusSchema.parse(rawData);
 
     const updateData: any = { status: data.status };
     if (data.meetingLink !== undefined) {

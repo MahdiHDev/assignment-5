@@ -1,7 +1,15 @@
-import { ProfileStatus, TutorLevel } from "../../generated/enums";
+import { ProfileStatus } from "../../generated/enums";
 import { TutorProfileWhereInput } from "../../generated/models";
 import { prisma } from "../../lib/prisma";
-import { getAllTutorsOptions } from "./tutor.interface";
+import {
+    getAllTutorsOptions,
+    IcreateTeachingSession,
+    IupdateTeachingSession,
+} from "./tutor.interface";
+import {
+    createTeachingSessionSchema,
+    updateTeachingSessionSchema,
+} from "./tutor.validation";
 
 // create tutor profile
 const createTutorProfile = async (data: { bio?: string }, userId: string) => {
@@ -22,25 +30,9 @@ const createTutorProfile = async (data: { bio?: string }, userId: string) => {
 // create teaching session
 const createTeachingSession = async (
     userId: string,
-    data: {
-        subjectName: string;
-        hourlyRate: number;
-        experienceYears: number;
-        level: TutorLevel;
-        bio?: string;
-        isPrimary?: boolean;
-    },
+    rawData: IcreateTeachingSession,
 ) => {
-    const validLevels = Object.values(TutorLevel);
-
-    // ✅ Enum validation
-    if (!validLevels.includes(data.level)) {
-        const error = new Error(
-            `Level must be one of: ${validLevels.join(", ")}`,
-        );
-
-        throw error;
-    }
+    const data = createTeachingSessionSchema.parse(rawData);
 
     const slug = data.subjectName.toLowerCase().trim().replace(/\s+/g, "-");
 
@@ -379,14 +371,10 @@ const updateTutorProfile = async (tutorProfileId: string, bio?: string) => {
 
 const updateTeachingSession = async (
     tutorSessionId: string,
-    data: {
-        hourlyRate?: number | undefined;
-        experienceYears?: number | undefined;
-        level?: TutorLevel;
-        description?: string;
-        isPrimary?: boolean;
-    },
+    rawData: IupdateTeachingSession,
 ) => {
+    const data = updateTeachingSessionSchema.parse(rawData);
+
     return await prisma.tutorCategory.update({
         where: { id: tutorSessionId },
         data: {

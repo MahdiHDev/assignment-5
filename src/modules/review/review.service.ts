@@ -1,9 +1,10 @@
 import { prisma } from "../../lib/prisma";
+import { IreviewData } from "./review.interface";
+import { createReviewSchema } from "./review.validation";
 
-const createReview = async (
-    studentId: string,
-    reviewData: { bookingId: string; rating: number; comment: string },
-) => {
+const createReview = async (studentId: string, rawData: IreviewData) => {
+    const reviewData = createReviewSchema.parse(rawData);
+
     return await prisma.$transaction(async (tx) => {
         // checking booking exists or not
         const booking = await tx.booking.findUnique({
@@ -45,7 +46,7 @@ const createReview = async (
                 studentId,
                 tutorProfileId,
                 rating: reviewData.rating,
-                comment: reviewData.comment,
+                comment: reviewData.comment ?? null,
             },
         });
 
