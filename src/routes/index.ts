@@ -1,6 +1,7 @@
 import type { Router as ExpressRouter } from "express";
 import { Router } from "express";
 import adminRoutes from "../modules/admin/admin.routes";
+import { AuthRoutes } from "../modules/auth/auth.routes";
 import availabilityRoutes from "../modules/availability/availability.routes";
 import bookingRoutes from "../modules/booking/booking.routes";
 import { PaymentRoutes } from "../modules/payment/payment.routes";
@@ -11,6 +12,10 @@ import tutorRoutes from "../modules/tutor/tutor.routes";
 const routes: ExpressRouter = Router();
 
 const moduleRoutes = [
+    {
+        path: "/auth",
+        route: AuthRoutes,
+    },
     {
         path: "/tutor",
         route: tutorRoutes,

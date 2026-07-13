@@ -1,6 +1,6 @@
 // src/app/module/payment/payment.routes.ts
 import { Router, type Router as ExpressRouter } from "express";
-import checkAuth, { UserRole } from "../../app/middleware/auth";
+import { checkAuth, UserRole } from "../../app/middleware/auth";
 import { PaymentController } from "./payment.controller";
 
 const router: ExpressRouter = Router();

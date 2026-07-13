@@ -1,6 +1,6 @@
 import type { Router as ExpressRouter } from "express";
 import { Router } from "express";
-import auth, { checkAuth, UserRole } from "../../app/middleware/auth";
+import { checkAuth, UserRole } from "../../app/middleware/auth";
 import checkUserBanStatus from "../../app/middleware/checkBanStatus";
 import { TutorController } from "./tutor.controller";
 
@@ -10,7 +10,7 @@ tutorRoutes.get("/getAllTutors", TutorController.getAllTutors);
 
 tutorRoutes.get(
     "/getAllTutors/admin",
-    auth(UserRole.ADMIN),
+    checkAuth(UserRole.ADMIN),
     TutorController.getAllTutors,
 );
 
