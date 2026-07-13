@@ -10,10 +10,10 @@ export default defineConfig({
     splitting: false,
     sourcemap: true,
     // Add this banner to shim require() for CJS dependencies
-    // banner: {
-    //   js: `
-    //     import { createRequire } from 'module';
-    //     const require = createRequire(import.meta.url);
-    //   `,
-    // },
+    banner: {
+        js: `
+        import { createRequire } from 'module';
+        const require = createRequire(import.meta.url);
+      `,
+    },
 });
