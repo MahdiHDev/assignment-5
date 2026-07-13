@@ -1,4 +1,3 @@
-import { toNodeHandler } from "better-auth/node";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application, Request, Response } from "express";
@@ -7,7 +6,6 @@ import qs from "qs";
 import errorHandler from "./app/middleware/globalErrorHandler";
 import { notFound } from "./app/middleware/notFound";
 import userRouter from "./app/modules/user/user.router";
-import { auth } from "./lib/auth";
 import { PaymentController } from "./modules/payment/payment.controller";
 import routes from "./routes";
 
@@ -37,7 +35,7 @@ app.use(
 );
 
 // Bettr auth hander
-app.use("/api/auth", toNodeHandler(auth));
+// app.use("/api/auth", toNodeHandler(auth));
 
 // Enable URL-encoded form data parsing
 app.use(express.urlencoded({ extended: true }));

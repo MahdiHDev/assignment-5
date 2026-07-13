@@ -15,5 +15,9 @@ const bootstrap = async () => {
         process.exit(1);
     }
 };
+// ✅ Only listen locally — Vercel uses export default
+if (process.env.NODE_ENV !== "production") {
+    bootstrap();
+}
 
-bootstrap();
+export default app;
